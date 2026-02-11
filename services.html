@@ -1,0 +1,621 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - פנדה</title>
+  <meta name="description" content="Services - פנדה provides professional שירותים דיגיטליים ועיצוב services. Specializing in סוכנות דיגיטל.">
+  <meta name="keywords" content="סוכנות דיגיטל, סוכנות דיגיטל לסטארטאפים בישראל, עיצוב ובניית אתרים לעסקים, עיצוב אפליקציות מובייל למותגים, סוכנות דיגיטל">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="Services - פנדה">
+  <meta property="og:description" content="Services - פנדה provides professional שירותים דיגיטליים ועיצוב services. Specializing in סוכנות דיגיטל.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services - פנדה">
+  <meta name="twitter:description" content="Services - פנדה provides professional שירותים דיגיטליים ועיצוב services. Specializing in סוכנות דיגיטל.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+<!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'b8db769a-a6f1-4d28-8656-27e7b9865a32',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+</head>
+<body>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.webp" alt="פנדה" class="logo" />
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/services">Services</a></li><li><a href="/work">Work</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="services-intro-section" data-layout-spec="Services-intro">
+  <div class="services-intro-container">
+    <div class="services-intro-grid">
+      <div class="services-intro-content">
+        <h1 class="services-intro-title">שירותים שמחברים עיצוב ומערכות</h1>
+        <h3 class="services-intro-subtitle">מסע מלא מרעיון ועד השקה – עם שותף אחד</h3>
+        <p class="services-intro-text">אנחנו פותרים את הפער בין חזון עיצובי לביצוע טכנולוגי. כל פרויקט מתחיל בשיחה אחת ומסתיים במוצר שעובד, נראה מדהים ומניע תוצאות עסקיות. בין אם אתם סטארטאפ עם MVP ראשון או מותג מבוסס שצריך ריענון – אנחנו כאן.</p>
+        <a href="contact.html" class="services-intro-cta btn-primary btn-pill">בואו נדבר</a>
+      </div>
+      <div class="services-intro-image-wrapper">
+        <img data-placeholder="services-intro-hero-image" data-context="Abstract studio workspace scene for a digital design agency called Panda: modern desk with laptop displaying colorful UI designs, floating geometric shapes (triangles, circles) with aurora gradient lighting in purple, cyan, and orange tones, subtle panda silhouette integrated into reflections on glass surface, professional yet creative atmosphere, soft grain texture overlay, premium editorial photography style" width="600" height="800" src="/assets/site-services-intro-hero-image.webp" alt="סביבת עבודה דיגיטלית מעוצבת עם אלמנטים גרפיים">
+        <div class="services-intro-image-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services-services-section" data-layout-spec="Services-services">
+  <div class="services-container">
+    <div class="services-header">
+      <h2 class="services-title">תחומי שירות</h2>
+      <p class="services-intro">אנחנו מציעים פתרונות דיגיטליים מקצה לקצה – מעיצוב חווית משתמש ועד אוטומציה תפעולית. כל פרויקט מותאם אישית לצרכים שלך.</p>
+    </div>
+
+    <div class="services-list">
+      <div class="service-row">
+        <div class="service-flow-node" aria-hidden="true">
+          <svg data-no-icon-edit="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="3" fill="currentColor"></circle>
+            <line x1="10" y1="0" x2="10" y2="7" stroke="currentColor" stroke-width="1.5"></line>
+            <line x1="10" y1="13" x2="10" y2="20" stroke="currentColor" stroke-width="1.5"></line>
+          </svg>
+        </div>
+        <div class="service-content">
+          <h3 class="service-name">UX ועיצוב מוצר</h3>
+          <p class="service-description">אנחנו בונים חוויות משתמש אינטואיטיביות ומרתקות שמניעות את המשתמשים שלך לפעולה. מחקר, אב-טיפוס ובדיקות משתמשים מובילות לעיצוב שעובד.</p>
+          <div class="service-deliverables">
+            <p class="deliverable-item">מחקר משתמשים ומיפוי מסעות לקוח</p>
+            <p class="deliverable-item">אב-טיפוס אינטראקטיבי ובדיקות שימושיות</p>
+            <p class="deliverable-item">עיצוב ממשקים ומערכות עיצוב מלאות</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-row">
+        <div class="service-flow-node" aria-hidden="true">
+          <svg data-no-icon-edit="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="3" fill="currentColor"></circle>
+            <line x1="10" y1="0" x2="10" y2="7" stroke="currentColor" stroke-width="1.5"></line>
+            <line x1="10" y1="13" x2="10" y2="20" stroke="currentColor" stroke-width="1.5"></line>
+          </svg>
+        </div>
+        <div class="service-content">
+          <h3 class="service-name">עיצוב ובניית אתרים</h3>
+          <p class="service-description">אתרים מותאמים אישית שמשלבים עיצוב ויזואלי מרשים עם ביצועים מהירים וחוויית משתמש מושלמת. מאתרי נחיתה ועד פלטפורמות מורכבות.</p>
+          <div class="service-deliverables">
+            <p class="deliverable-item">אתרי תדמית ונחיתה ממירים</p>
+            <p class="deliverable-item">פיתוח responsive ואופטימיזציה לביצועים</p>
+            <p class="deliverable-item">אינטגרציות CMS וכלי ניהול תוכן</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-row">
+        <div class="service-flow-node" aria-hidden="true">
+          <svg data-no-icon-edit="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="3" fill="currentColor"></circle>
+            <line x1="10" y1="0" x2="10" y2="7" stroke="currentColor" stroke-width="1.5"></line>
+            <line x1="10" y1="13" x2="10" y2="20" stroke="currentColor" stroke-width="1.5"></line>
+          </svg>
+        </div>
+        <div class="service-content">
+          <h3 class="service-name">זהות מותג ומערכות עיצוב</h3>
+          <p class="service-description">בניית זהות ויזואלית עקבית ומרשימה שמבדלת את המותג שלך מהמתחרים. לוגו, צבעים, טיפוגרפיה ומערכת עיצוב שלמה.</p>
+          <div class="service-deliverables">
+            <p class="deliverable-item">פיתוח לוגו וזהות ויזואלית מלאה</p>
+            <p class="deliverable-item">מערכת עיצוב (Design System) להתאמה בכל הערוצים</p>
+            <p class="deliverable-item">מדריך שימוש ונכסים דיגיטליים מוכנים</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-row">
+        <div class="service-flow-node" aria-hidden="true">
+          <svg data-no-icon-edit="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="3" fill="currentColor"></circle>
+            <line x1="10" y1="0" x2="10" y2="7" stroke="currentColor" stroke-width="1.5"></line>
+            <line x1="10" y1="13" x2="10" y2="20" stroke="currentColor" stroke-width="1.5"></line>
+          </svg>
+        </div>
+        <div class="service-content">
+          <h3 class="service-name">אוטומציה ועיצוב תפעולי</h3>
+          <p class="service-description">אוטומציות חכמות שחוסכות זמן ומשפרות יעילות. מתהליכי שיווק ועד מערכות פנימיות – אנחנו הופכים תהליכים מורכבים לפשוטים.</p>
+          <div class="service-deliverables">
+            <p class="deliverable-item">אוטומציות שיווק (Email, CRM, Workflows)</p>
+            <p class="deliverable-item">אינטגרציות בין מערכות ופלטפורמות</p>
+            <p class="deliverable-item">ייעול תהליכים תפעוליים ומערכות ניהול</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-row service-row-last">
+        <div class="service-flow-node" aria-hidden="true">
+          <svg data-no-icon-edit="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="3" fill="currentColor"></circle>
+            <line x1="10" y1="0" x2="10" y2="7" stroke="currentColor" stroke-width="1.5"></line>
+          </svg>
+        </div>
+        <div class="service-content">
+          <h3 class="service-name">תבניות סושיאל ומערכות תוכן</h3>
+          <p class="service-description">תבניות מעוצבות ועקביות לרשתות החברתיות שמחזקות את הנוכחות הדיגיטלית שלך. מסטוריז ועד פוסטים מלאים – הכל במערכת אחת.</p>
+          <div class="service-deliverables">
+            <p class="deliverable-item">תבניות עיצוב לאינסטגרם, פייסבוק ולינקדאין</p>
+            <p class="deliverable-item">מערכות תוכן גמישות וקלות לעדכון</p>
+            <p class="deliverable-item">הנחיות שימוש ואפשרויות התאמה אישית</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="services-footer">
+      <p class="services-footer-text">כל פרויקט מותאם לצרכים הייחודיים שלך. אנחנו עובדים בגמישות – מפרויקטים קטנים ועד שותפויות ארוכות טווח. בואו נדבר על איך אפשר לקדם את העסק שלכם.</p>
+    </div>
+  </div>
+</section>
+
+<section class="services-process-section" data-layout-spec="Services-process">
+  <div class="services-process-container">
+    <div class="services-process-header">
+      <h2>איך הרעיון שלך הופך לפרויקט חי</h2>
+      <p>תהליך עבודה שקוף ומובנה שמוביל אותך משלב הרעיון ועד ההשקה. ארבעה שלבים ברורים עם שיתוף פעולה צמוד בכל נקודה.</p>
+    </div>
+    
+    <div class="services-process-grid">
+      <div class="services-process-card">
+        <div class="services-process-step-number">01</div>
+        <h3>גילוי והבנה</h3>
+        <p>אנחנו מתחילים בשיחה מעמיקה כדי להבין את המטרות שלך, קהל היעד והאתגרים העסקיים. בשלב זה אנחנו בונים אסטרטגיה ברורה ומגדירים את היקף הפרויקט, לוחות זמנים וציפיות משותפות.</p>
+      </div>
+      
+      <div class="services-process-card">
+        <div class="services-process-step-number">02</div>
+        <h3>עיצוב וחווית משתמש</h3>
+        <p>כאן אנחנו יוצרים את הזהות הוויזואלית והחוויה הדיגיטלית. משרטוטים ראשוניים דרך עיצובי UI מפורטים, אנחנו מציגים לך כל שלב ומקבלים משוב כדי לוודא שהעיצוב משקף בדיוק את המותג והחזון שלך.</p>
+      </div>
+      
+      <div class="services-process-card">
+        <div class="services-process-step-number">03</div>
+        <h3>פיתוח ובנייה</h3>
+        <p>הופכים את העיצוב לקוד חי ומתפקד. אנחנו בונים את האתר או האפליקציה עם תשומת לב לביצועים, נגישות וחוויית משתמש חלקה. בשלב זה אתה מקבל גישה לסביבת פיתוח כדי לראות את ההתקדמות בזמן אמת.</p>
+      </div>
+      
+      <div class="services-process-card">
+        <div class="services-process-step-number">04</div>
+        <h3>השקה ושיפור מתמיד</h3>
+        <p>משיקים את הפרויקט לעולם ומלווים אותך בשבועות הראשונים. אנחנו עוקבים אחרי ביצועים, אוספים משוב ממשתמשים ומבצעים אופטימיזציות כדי להבטיח שהמוצר ממשיך להתפתח ולהשתפר עם הזמן.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="services-process-aurora-start"></div>
+  <div class="services-process-aurora-end"></div>
+</section>
+
+<section class="services-faq-section" data-layout-spec="Services-faq">
+  <div class="services-faq-container">
+    <div class="services-faq-intro">
+      <h2 class="services-faq-title">שאלות נפוצות</h2>
+      <p class="services-faq-subtitle">כאן תמצאו תשובות לשאלות הנפוצות ביותר על תהליך העבודה שלנו, מה אנחנו צריכים מכם, ואיך אנחנו יכולים לעזור לכם להצליח בעולם הדיגיטלי.</p>
+    </div>
+    
+    <div class="services-faq-list">
+      <div class="services-faq-item">
+        <h3 class="services-faq-question">כמה זמן לוקח פרויקט טיפוסי?</h3>
+        <p class="services-faq-answer">משך הפרויקט תלוי בהיקף ובמורכבות. אתר תדמית בסיסי יכול להיות מוכן תוך 3-4 שבועות, בעוד שפרויקט מורכב יותר עם אוטומציות ואפליקציה יכול לקחת 8-12 שבועות. אנחנו תמיד נציג לכם ציר זמן ברור בתחילת הפרויקט ונעדכן אתכם לאורך כל הדרך.</p>
+      </div>
+      
+      <div class="services-faq-item">
+        <h3 class="services-faq-question">מה אתם צריכים מאיתנו כדי להתחיל?</h3>
+        <p class="services-faq-answer">כדי להתחיל, אנחנו צריכים להבין את החזון שלכם, קהל היעד, והמטרות העסקיות. נשמח לקבל חומרי מותג קיימים (לוגו, צבעים, גופנים), תוכן ראשוני (טקסטים, תמונות), ודוגמאות לעיצובים שאתם אוהבים. אם אין לכם חלק מהחומרים, אנחנו יכולים לעזור ביצירתם.</p>
+      </div>
+      
+      <div class="services-faq-item">
+        <h3 class="services-faq-question">איך עובד תהליך השינויים והתיקונים?</h3>
+        <p class="services-faq-answer">אנחנו מאמינים בשיתוף פעולה ושקיפות. בכל שלב מרכזי נציג לכם את העבודה ונקבל משוב. כל חבילה כוללת מספר סבבי תיקונים (בדרך כלל 2-3 סבבים לכל שלב), כך שתוכלו לוודא שהתוצאה בדיוק כמו שדמיינתם. תיקונים נוספים מעבר למוסכם יתומחרו בנפרד.</p>
+      </div>
+      
+      <div class="services-faq-item">
+        <h3 class="services-faq-question">מה קורה אחרי סיום הפרויקט?</h3>
+        <p class="services-faq-answer">בסיום הפרויקט אתם מקבלים את כל הקבצים והגישה המלאה לאתר/מערכת. אנחנו מספקים תיעוד מפורט, הדרכה אישית, ותמיכה טכנית לחודש הראשון. מעבר לכך, אנחנו מציעים חבילות תחזוקה חודשיות לעדכונים, תמיכה שוטפת ושיפורים מתמשכים.</p>
+      </div>
+      
+      <div class="services-faq-item">
+        <h3 class="services-faq-question">האם אתם יכולים לבנות כל אוטומציה שאני צריך?</h3>
+        <p class="services-faq-answer">אנחנו מתמחים באוטומציות עסקיות כמו חיבור בין מערכות, ניהול לידים, תזרימי עבודה אוטומטיים, ושליחת הודעות. אם יש לכם צורך ספציפי, נשמח לבחון את האפשרות ולהציע פתרון מותאם. חלק מהאוטומציות דורשות כלים חיצוניים (כמו Zapier או Make), ואנחנו נסביר לכם את האופציות.</p>
+      </div>
+      
+      <div class="services-faq-item">
+        <h3 class="services-faq-question">איך מתחילים לעבוד איתכם?</h3>
+        <p class="services-faq-answer">התהליך מתחיל בשיחת ייעוץ ראשונית (ללא עלות), שבה אנחנו מכירים את הצרכים שלכם ומציעים פתרון מותאם. אחרי השיחה תקבלו הצעת מחיר מפורטת וציר זמן. אם אתם מחליטים להתקדם, נחתום על הסכם ונתחיל בעבודה. אפשר ליצור קשר דרך הטופס באתר, בווטסאפ, או במייל.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="services-faq-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,45 Q60,38 120,42 T240,40 Q300,45 360,38 T480,42 Q540,40 600,45 T720,38 Q780,42 840,40 T960,45 Q1020,38 1080,42 T1200,40 L1200,80 Z" fill="var(--bg-dark)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="services-cta-section" data-layout-spec="Services-cta">
+  <div class="services-cta-container">
+    <div class="services-cta-content">
+      <h2 class="services-cta-title">ספרו לנו מה אתם בונים</h2>
+      <p class="services-cta-description">שתפו אותנו במטרות שלכם, באתגרים שאתם מתמודדים איתם, ובדוגמאות למה שמעורר בכם השראה. נשמח לשמוע על החזון שלכם ולהבין איך נוכל לעזור להגשים אותו.</p>
+      <a href="/contact" class="services-cta-button btn-primary">צרו קשר</a>
+      <p class="services-cta-next-steps">נחזור אליכם תוך 24 שעות עם הצעה ראשונית. השלב הבא כולל שיחת ייעוץ קצרה או הצעת היקף פרויקט מפורטת בכתב, בהתאם לצרכים שלכם.</p>
+    </div>
+  </div>
+  
+  <svg class="services-cta-aurora" data-no-icon-edit="true" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="aurora-gradient-1" cx="20%" cy="30%" r="50%">
+        <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:0.4"></stop>
+        <stop offset="100%" style="stop-color:#7C3AED;stop-"></stop>
+      </radialGradient>
+      <radialGradient id="aurora-gradient-2" cx="80%" cy="60%" r="45%">
+        <stop offset="0%" style="stop-color:#EC4899;stop-opacity:0.35"></stop>
+        <stop offset="100%" style="stop-color:#EC4899;stop-"></stop>
+      </radialGradient>
+      <radialGradient id="aurora-gradient-3" cx="50%" cy="80%" r="40%">
+        <stop offset="0%" style="stop-color:#22D3EE;stop-opacity:0.3"></stop>
+        <stop offset="100%" style="stop-color:#22D3EE;stop-"></stop>
+      </radialGradient>
+      <filter id="grain-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"></feTurbulence>
+        <feColorMatrix type="saturate" values="0"></feColorMatrix>
+        <feBlend mode="multiply" in="SourceGraphic" in2="colorNoise"></feBlend>
+      </filter>
+    </defs>
+    <rect width="1200" height="600" fill="#0B1B2B"></rect>
+    <ellipse cx="240" cy="180" rx="600" ry="270" fill="url(#aurora-gradient-1)"></ellipse>
+    <ellipse cx="960" cy="360" rx="540" ry="250" fill="url(#aurora-gradient-2)"></ellipse>
+    <ellipse cx="600" cy="480" rx="480" ry="200" fill="url(#aurora-gradient-3)"></ellipse>
+    <rect width="1200" height="600" fill="#0B1B2B" opacity="0.15" filter="url(#grain-filter)"></rect>
+  </svg>
+</section>
+  </main>
+  
+  <footer class="site-footer"><div class="footer-container"><div class="footer-grid"><div class="footer-column footer-about"><img src="/assets/logo.webp" alt="פנדה" class="logo" /><p class="footer-description">שירותים דיגיטליים ועיצוב מקצועי להצלחה העסקית שלך</p><div class="social-links"><a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div><div class="footer-column"><h3 class="footer-title">קישורים מהירים</h3><ul class="footer-links"><li><a href="/services">שירותים</a></li><li><a href="/work">עבודות</a></li><li><a href="/contact">צור קשר</a></li></ul></div><div class="footer-column"><h3 class="footer-title">יצירת קשר</h3><ul class="footer-contact"><li><i class="fas fa-envelope"></i><a href="mailto:[business_email]">[business_email]</a></li><li><i class="fas fa-phone"></i><a href="tel:[business_phone]">[business_phone]</a></li><li><a href="/"><i class="fas fa-map-marker-alt"></i><span>[business_address]</span></a></li></ul></div><div class="footer-column"><h3 class="footer-title">מידע משפטי</h3><ul class="footer-links"><li><a href="/privacy">מדיניות פרטיות</a></li><li><a href="/terms">תנאים והגבלות</a></li><li><a href="/accessibility">הצהרת נגישות</a></li></ul></div></div><div class="footer-bottom"><p class="copyright">© 2026 פנדה. כל הזכויות שמורות.</p><a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a></div></div></footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script src="/script.js"></script>
+
+    <div data-integration="accessibility:toolbar"></div>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body></html>

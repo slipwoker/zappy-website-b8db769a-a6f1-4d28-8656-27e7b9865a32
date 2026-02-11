@@ -1,0 +1,57 @@
+# פנדה — Generative Engine Optimization Map
+
+> A שירותים דיגיטליים ועיצוב business.
+
+---
+
+## Pages
+
+### Home
+https://-b8db769a.zappy5.app
+
+### Services
+https://-b8db769a.zappy5.app/services
+
+### Work
+https://-b8db769a.zappy5.app/work
+
+### Contact
+https://-b8db769a.zappy5.app/contact
+
+## Legal & Policy
+
+### Privacy Policy
+https://-b8db769a.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://-b8db769a.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://-b8db769a.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About פנדה
+פנדה is a business in the שירותים דיגיטליים ועיצוב industry.
+
+## Target Audience
+- סטארטאפים טכנולוגיים
+- משרדי קריאייטיב
+- מותגי מסחר מקוון
+- מחלקות שיווק ארגוניות
+- מעצבים פרילנסרים
+
+## Industry
+שירותים דיגיטליים ועיצוב
+
+---
+
+# Additional Resources
+
+- **Sitemap**: https://-b8db769a.zappy5.app/sitemap.xml
+- **Robots.txt**: https://-b8db769a.zappy5.app/robots.txt

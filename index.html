@@ -1,0 +1,581 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פנדה | סוכנות דיגיטל</title>
+  <meta name="description" content="Home - פנדה provides professional שירותים דיגיטליים ועיצוב services. Specializing in סוכנות דיגיטל.">
+  <meta name="keywords" content="סוכנות דיגיטל, סוכנות דיגיטל לסטארטאפים בישראל, עיצוב ובניית אתרים לעסקים, עיצוב אפליקציות מובייל למותגים, סוכנות דיגיטל">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="פנדה | סוכנות דיגיטל">
+  <meta property="og:description" content="Home - פנדה provides professional שירותים דיגיטליים ועיצוב services. Specializing in סוכנות דיגיטל.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="פנדה | סוכנות דיגיטל">
+  <meta name="twitter:description" content="Home - פנדה provides professional שירותים דיגיטליים ועיצוב services. Specializing in סוכנות דיגיטל.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+<!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'b8db769a-a6f1-4d28-8656-27e7b9865a32',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+</head>
+<body>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.webp" alt="פנדה" class="logo" />
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/services">Services</a></li><li><a href="/work">Work</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="home-hero-section" data-layout-spec="Home-Hero" data-hero-type="fullscreen-scrim">
+  <div class="home-hero-section__bg-wrapper" data-preserve-bg="0">
+    <img data-placeholder="home-hero-bg" data-context="Cinematic studio scene for digital services agency: aurora gradient atmosphere with lavender to cyan to peach transitions, subtle grain texture overlay, abstract digital panda motif as a reflective graphic silhouette integrated into the background (not a cutout), faint dotted/line pattern embedded in the image, dreamy and professional atmosphere, suitable for a creative digital agency hero background" width="1920" height="1080" src="/assets/site-home-hero-bg.webp" alt="פנדה - סטודיו דיגיטלי ועיצוב" class="home-hero-section__bg-image">
+    <div class="home-hero-section__scrim" aria-hidden="true"></div>
+  </div>
+  
+  <div class="home-hero-section__content-wrapper">
+    <div class="home-hero-section__overlay-group">
+      <h1 class="home-hero-section__headline">עיצוב דיגיטלי<br>שמניע תוצאות</h1>
+      <h3 class="home-hero-section__subtitle">סטודיו אחד. חמישה תחומים. UX, עיצוב, פיתוח אתרים, אוטומציות וסושיאל במקום אחד.</h3>
+      <div class="home-hero-section__cta-row">
+        <a href="/contact" class="home-hero-section__cta home-hero-section__cta--primary">בואו נדבר</a>
+        <a href="/work" class="home-hero-section__cta home-hero-section__cta--secondary">הפרויקטים שלנו</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-capabilities-section" data-layout-spec="Home-capabilities">
+  <div class="home-capabilities-container">
+    <div class="home-capabilities-content-column">
+      <h2 class="home-capabilities-title">מה הסטודיו מספק</h2>
+      <p class="home-capabilities-intro">אנחנו מלווים מותגים מהרעיון ועד לביצוע: מגבשים אסטרטגיה, מעצבים חוויות משתמש, בונים מוצרים דיגיטליים, מפעילים אוטומציות ומייצרים תוכן שמניע תוצאות. כל פרויקט הוא שילוב של חשיבה עסקית, יצירתיות ויכולת טכנולוגית.</p>
+      <p class="home-capabilities-intro-secondary">הגישה שלנו: אסטרטגיה → עיצוב → בנייה → אוטומציה → איטרציה מתמדת.</p>
+      
+      <div class="home-capabilities-cards-grid">
+        <div class="home-capabilities-card">
+          <div class="home-capabilities-card-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="14" height="14" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <rect x="22" y="4" width="14" height="14" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <rect x="4" y="22" width="14" height="14" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <circle cx="29" cy="29" r="6" stroke="currentColor" stroke-width="2"></circle>
+              <path d="M29 26 L29 32 M26 29 L32 29" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <h3 class="home-capabilities-card-title">UX וחשיבה מוצרית</h3>
+          <p class="home-capabilities-card-text">מחקר משתמשים, מיפוי מסעות לקוח, ארכיטקטורת מידע ועיצוב אינטראקציה שמביאים לחוויות אינטואיטיביות ומשמעותיות.</p>
+        </div>
+        
+        <div class="home-capabilities-card">
+          <div class="home-capabilities-card-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <path d="M4 14 L36 14" stroke="currentColor" stroke-width="2"></path>
+              <circle cx="10" cy="11" r="1.5" fill="currentColor"></circle>
+              <circle cx="15" cy="11" r="1.5" fill="currentColor"></circle>
+              <circle cx="20" cy="11" r="1.5" fill="currentColor"></circle>
+              <rect x="10" y="19" width="8" height="2" rx="1" fill="currentColor"></rect>
+              <rect x="10" y="24" width="12" height="2" rx="1" fill="currentColor"></rect>
+              <rect x="24" y="19" width="6" height="8" rx="1" stroke="currentColor" stroke-width="1.5"></rect>
+            </svg>
+          </div>
+          <h3 class="home-capabilities-card-title">עיצוב ובניית אתרים</h3>
+          <p class="home-capabilities-card-text">אתרים מותאמים אישית, ממשקים רספונסיביים ומערכות תוכן גמישות שמשלבות עיצוב ויזואלי עם ביצועים טכניים מעולים.</p>
+        </div>
+        
+        <div class="home-capabilities-card">
+          <div class="home-capabilities-card-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2"></circle>
+              <path d="M20 10 L20 20 L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 6 L8 6 M8 6 L8 10 M8 6 L12 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M28 34 L32 34 M32 34 L32 30 M32 34 L28 30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="33" cy="12" r="3" stroke="currentColor" stroke-width="2"></circle>
+            </svg>
+          </div>
+          <h3 class="home-capabilities-card-title">מערכות מותג וקראפט ויזואלי</h3>
+          <p class="home-capabilities-card-text">פיתוח זהות מותג שלמה, ניהול עקביות ויזואלית, טיפוגרפיה, צבעים ומערכות עיצוב שמתרגמות את הסיפור של המותג.</p>
+        </div>
+        
+        <div class="home-capabilities-card">
+          <div class="home-capabilities-card-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="10" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <rect x="24" y="10" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <rect x="15" y="24" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <path d="M11 20 L11 22 L20 22 L20 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M29 20 L29 22 L20 22 L20 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="20" cy="22" r="2" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <h3 class="home-capabilities-card-title">אוטומציות ותפעול</h3>
+          <p class="home-capabilities-card-text">בניית תהליכים אוטומטיים, אינטגרציות בין מערכות, ניהול נתונים וכלים שמשחררים זמן ומייעלים את העבודה השוטפת.</p>
+        </div>
+        
+        <div class="home-capabilities-card home-capabilities-card-wide">
+          <div class="home-capabilities-card-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="6" width="28" height="20" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              <path d="M6 12 L34 12" stroke="currentColor" stroke-width="2"></path>
+              <circle cx="10" cy="9" r="1" fill="currentColor"></circle>
+              <circle cx="14" cy="9" r="1" fill="currentColor"></circle>
+              <rect x="11" y="16" width="6" height="2" rx="1" fill="currentColor"></rect>
+              <rect x="11" y="20" width="8" height="2" rx="1" fill="currentColor"></rect>
+              <rect x="22" y="16" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.5"></rect>
+              <path d="M14 30 L20 34 L26 30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="20" cy="35" r="2" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <h3 class="home-capabilities-card-title">סושיאל ומערכות תוכן</h3>
+          <p class="home-capabilities-card-text">אסטרטגיית תוכן, עיצוב פוסטים, ניהול קמפיינים ויצירת מערכות שמייצרות עקביות ומעורבות בכל הערוצים הדיגיטליים.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="home-capabilities-image-column">
+      <div class="home-capabilities-image-panel">
+        <img data-placeholder="home-capabilities-illustration" data-context="Abstract editorial illustration for a digital design studio showing a flow-map motif with connected nodes and lines, geometric panda elements subtly integrated, aurora-like gradient edges in deep navy ink and soft purple-pink tones, premium minimalist style, calm and sophisticated, not busy, suitable for a capabilities section background" width="600" height="900" src="/assets/site-home-capabilities-illustration.webp" alt="מפת זרימה מופשטת המדגימה את יכולות הסטודיו הדיגיטלי">
+      </div>
+    </div>
+  </div>
+  
+  <div class="home-capabilities-grain-overlay" aria-hidden="true"></div>
+</section>
+
+<section class="home-case-studies-section" data-layout-spec="Home-case-studies">
+  <div class="home-case-studies-container">
+    <div class="home-case-studies-header">
+      <h2>עבודות נבחרות</h2>
+      <p>כל פרויקט מספר סיפור של שיתוף פעולה, חשיבה אסטרטגית ויצירתיות טכנית. אנחנו מתמקדים בתוצאות מדידות שמקדמות עסקים קדימה.</p>
+    </div>
+
+    <div class="home-case-studies-grid">
+      <article class="case-tile case-tile-featured">
+        <div class="case-tile-image">
+          <img data-placeholder="home-case-studies-image-1" data-context="Modern web design mockup for digital services agency - clean interface on laptop screen showing a professional business website with elegant typography and structured layout, flat device mockup with soft shadow, navy and cream color scheme" width="600" height="400" src="/assets/site-home-case-studies-image-1.webp" alt="תצוגת פרויקט עיצוב אתר">
+        </div>
+        <div class="case-tile-content">
+          <h3>מערכת ניהול תוכן חכמה לסטארטאפ טכנולוגי</h3>
+          <p>עיצבנו וביצענו פלטפורמה דיגיטלית שמשלבת אוטומציה, עיצוב UX אינטואיטיבי וממשק ניהול מתקדם.</p>
+          <p class="case-tile-result">התוצאה: שיפור בזרימת העבודה של הצוות ב-40% ומעבר חלק יותר של משתמשים חדשים</p>
+        </div>
+      </article>
+
+      <article class="case-tile case-tile-small">
+        <div class="case-tile-image">
+          <img data-placeholder="home-case-studies-image-2" data-context="Mobile app design mockup for digital agency - smartphone screen showing modern app interface with clean navigation and vibrant gradient accents, flat device mockup with soft shadow, purple and orange gradient elements" width="400" height="300" src="/assets/site-home-case-studies-image-2.webp" alt="תצוגת פרויקט עיצוב אפליקציה">
+        </div>
+        <div class="case-tile-content">
+          <h3>אפליקציית מובייל למותג אופנה</h3>
+          <p>פיתחנו חווית משתמש מרשימה עם אנימציות חלקות וממשק רספונסיבי מלא.</p>
+          <p class="case-tile-result">התוצאה: עלייה בהתקנות ושימוש יומי פעיל יותר</p>
+        </div>
+      </article>
+
+      <article class="case-tile case-tile-small">
+        <div class="case-tile-image">
+          <img data-placeholder="home-case-studies-image-3" data-context="Social media branding mockup for digital agency - Instagram feed grid showing cohesive brand identity with consistent colors and design elements, professional social media templates with navy, purple and peach accents" width="400" height="300" src="/assets/site-home-case-studies-image-3.webp" alt="תצוגת פרויקט מיתוג סושיאל">
+        </div>
+        <div class="case-tile-content">
+          <h3>מיתוג ואסטרטגיית תוכן לרשתות חברתיות</h3>
+          <p>בנינו זהות ויזואלית עקבית וקמפיין תוכן שמחבר עם הקהל היעד.</p>
+          <p class="case-tile-result">התוצאה: צמיחה אורגנית באנגייג'מנט והגעה רחבה יותר</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="home-case-studies-cta">
+      <a href="/work" class="btn-primary btn-pill">צפו בכל העבודות שלנו</a>
+    </div>
+  </div>
+
+  <div class="home-case-studies-aurora home-case-studies-aurora-top-left"></div>
+  <div class="home-case-studies-aurora home-case-studies-aurora-bottom-right"></div>
+  <div class="home-case-studies-dots home-case-studies-dots-left"></div>
+  <div class="home-case-studies-dots home-case-studies-dots-right"></div>
+</section>
+
+<section class="home-testimonials-section" data-layout-spec="Home-testimonials">
+  <div class="home-testimonials-container">
+    <div class="home-testimonials-intro">
+      <h2 class="home-testimonials-title">מילים מלקוחות</h2>
+      <p class="home-testimonials-subtitle">כל פרויקט מתחיל בשיחה. אנחנו מאמינים בשקיפות, בתקשורת פתוחה ובשיתוף פעולה הדוק שמוביל לתוצאות שמדברות בעד עצמן.</p>
+    </div>
+
+    <div class="home-testimonials-grid">
+      <article class="home-testimonials-card">
+        <h3 class="home-testimonials-card-title">בהירות ומקצועיות</h3>
+        <p class="home-testimonials-card-quote">"עבדנו עם פנדה על מיתוג מחדש ובניית אתר לסטארטאפ שלנו. התהליך היה ברור, מהיר ומדויק. הצוות הבין בדיוק מה אנחנו צריכים ויצר משהו שממש משקף את הזהות שלנו. ממליצה בחום!"</p>
+      </article>
+
+      <article class="home-testimonials-card">
+        <h3 class="home-testimonials-card-title">מהירות ביצוע מרשימה</h3>
+        <p class="home-testimonials-card-quote">"הופתעתי לטובה מהמהירות והיעילות. פנדה לקחו את הרעיון שלנו לעיצוב אפליקציה והפכו אותו למציאות תוך זמן קצר, תוך שמירה על רמת עיצוב גבוהה ותשומת לב לכל פרט. שירות ברמה אחרת."</p>
+      </article>
+
+      <article class="home-testimonials-card">
+        <h3 class="home-testimonials-card-title">טעם עיצובי מושלם</h3>
+        <p class="home-testimonials-card-quote">"כסוכנות דיגיטל שעובדת עם מותגים מובילים, חיפשנו שותף שיבין את החזון שלנו. פנדה הביאו לא רק מקצועיות טכנית אלא גם חוש אסתטי מעולה. התוצאה? אתר שמקבל מחמאות מכל כיוון."</p>
+      </article>
+    </div>
+
+    <p class="home-testimonials-closing">אנחנו לא רק מספקים שירותים דיגיטליים – אנחנו בונים שותפויות ארוכות טווח מבוססות על אמון, תקשורת פתוחה ותוצאות מדידות. כל פרויקט מקבל את מלוא תשומת הלב שלנו.</p>
+  </div>
+</section>
+
+<section class="home-cta-section" data-layout-spec="Home-cta">
+  <div class="home-cta-section__container">
+    <div class="home-cta-section__content">
+      <h2 class="home-cta-section__headline">מוכנים לבנות משהו חד וחכם?</h2>
+      <p class="home-cta-section__description">ספרו לנו על המטרות שלכם, האתגרים והחזון. נעצב פתרון דיגיטלי שמתאים בדיוק לצרכים שלכם.</p>
+      <a href="/contact" class="home-cta-section__button btn-primary">בואו נדבר</a>
+      <p class="home-cta-section__note">הכינו תיאור קצר של הפרויקט, לוח זמנים משוער ודוגמאות להשראה. נחזור אליכם תוך 24 שעות.</p>
+    </div>
+  </div>
+  <div class="home-cta-section__grain"></div>
+</section>
+  </main>
+  
+  <footer class="site-footer"><div class="footer-container"><div class="footer-grid"><div class="footer-column footer-about"><img src="/assets/logo.webp" alt="פנדה" class="logo" /><p class="footer-description">שירותים דיגיטליים ועיצוב מקצועי להצלחה העסקית שלך</p><div class="social-links"><a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div><div class="footer-column"><h3 class="footer-title">קישורים מהירים</h3><ul class="footer-links"><li><a href="/services">שירותים</a></li><li><a href="/work">עבודות</a></li><li><a href="/contact">צור קשר</a></li></ul></div><div class="footer-column"><h3 class="footer-title">יצירת קשר</h3><ul class="footer-contact"><li><i class="fas fa-envelope"></i><a href="mailto:[business_email]">[business_email]</a></li><li><i class="fas fa-phone"></i><a href="tel:[business_phone]">[business_phone]</a></li><li><a href="/"><i class="fas fa-map-marker-alt"></i><span>[business_address]</span></a></li></ul></div><div class="footer-column"><h3 class="footer-title">מידע משפטי</h3><ul class="footer-links"><li><a href="/privacy">מדיניות פרטיות</a></li><li><a href="/terms">תנאים והגבלות</a></li><li><a href="/accessibility">הצהרת נגישות</a></li></ul></div></div><div class="footer-bottom"><p class="copyright">© 2026 פנדה. כל הזכויות שמורות.</p><a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a></div></div></footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script src="/script.js"></script>
+
+    <div data-integration="accessibility:toolbar"></div>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body></html>
